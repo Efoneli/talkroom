@@ -131,7 +131,6 @@ const MessagesPage: React.FC = () => {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    // Update local state immediately with the new message
     const newMessageData: Message = {
       id: messages.length + 1,
       body: newMessage,
@@ -140,7 +139,6 @@ const MessagesPage: React.FC = () => {
     setNewMessage("");
 
     try {
-      // Send POST request to backend to create new message
       await axios.post("http://localhost:3000/messages", {
         ownerId,
         body: newMessage,

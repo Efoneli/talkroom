@@ -1,4 +1,3 @@
-// Room.tsx
 'use client'
 import React, { useState, useEffect } from 'react';
 import axios, { AxiosError } from 'axios';
@@ -38,12 +37,12 @@ const Room: React.FC<{ roomId: number }> = ({ roomId }) => {
       await axios.post(`http://localhost:3000/messages/${roomId}`, {
         body: newMessage,
       });
-      // Update local state with new message
+
       setMessages(prevMessages => [
         ...prevMessages,
         { id: prevMessages.length + 1, body: newMessage },
       ]);
-      // Clear the input field
+
       setNewMessage('');
     } catch (error) {
       const axiosError = error as AxiosError;

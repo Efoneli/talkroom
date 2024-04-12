@@ -3,18 +3,18 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import axios, { AxiosError } from "axios";
-import { useRouter } from "next/navigation"; // Import useRouter hook
+import { useRouter } from "next/navigation";
 
 interface Room {
   id: number;
   name: string;
-  slug: string; // Add slug property to Room interface
+  slug: string;
 }
 
 const Rooms: React.FC = () => {
   const [rooms, setRooms] = useState<Room[]>([]);
   const [newRoomName, setNewRoomName] = useState<string>("");
-  const router = useRouter(); // Initialize router
+  const router = useRouter();
 
   useEffect(() => {
     fetchRooms();
@@ -48,7 +48,7 @@ const Rooms: React.FC = () => {
   };
 
   const handleRoomClick = (slug: string) => {
-    router.push(`/rooms/${slug}`); // Navigate to the selected room
+    router.push(`/rooms/${slug}`);
   };
 
   const handleRoomNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {

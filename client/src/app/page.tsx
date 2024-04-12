@@ -1,21 +1,15 @@
-// ChatApp.jsx
 'use client'
 import React from 'react';
 import Rooms from './components/Rooms';
 
-const Home: React.FC = () => {
-  const { Rooms, pageProps } = this.props;
-
+const page: React.FC = () => {
+  
   return (
-    <Auth0Provider
-    domain="YOUR_DOMAIN"
-    clientId="YOUR_CLIENT_ID"
-    authorizationParams={{
-      redirect_uri: window.location.origin
-    }}
-    >      <Rooms {...pageProps} />
-    </Auth0Provider>
+    <div
+    
+    >      <Rooms />
+    </div>
   );
 };
 
-export default Home;
+export default page;
