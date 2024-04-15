@@ -32,7 +32,7 @@ export class RoomsController {
   @Get(':id')
   async findOne(@Param('id') id: string) {
     const room = await this.roomsService.findOne(+id);
-    const messages = await this.messagesService.findMessagesByRoomId(+id); // Fetch messages for the room
+    const messages = await this.messagesService.findMessagesByownerId(+id); // Fetch messages for the room
     return { room, messages };
   }
 

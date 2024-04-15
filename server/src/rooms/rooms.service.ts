@@ -11,34 +11,30 @@ export class RoomsService {
     @InjectRepository(Room)
     private readonly roomsRepository: Repository<Room>,
     private readonly entityManager: EntityManager,
-
-  ){}
+  ) {}
   async create(createRoomDto: CreateRoomDto) {
-    const user = new Room(createRoomDto)
-    await this.entityManager.save(user)
+    const user = new Room(createRoomDto);
+    await this.entityManager.save(user);
   }
 
   findAll() {
-    return this.roomsRepository.find()
+    return this.roomsRepository.find();
   }
 
   findOne(id: number) {
-    return this.roomsRepository.findOneBy({id})
+    return this.roomsRepository.findOneBy({ id });
   }
 
   async update(id: number, updateRoomDto: UpdateRoomDto) {
-    const room = await this.roomsRepository.findOneBy({id})
+    const room = await this.roomsRepository.findOneBy({ id });
     room.name = updateRoomDto.name ?? room.name;
-    
-    this.entityManager.save(room)
 
-    return room
+    this.entityManager.save(room);
+
+    return room;
   }
 
   async remove(id: number) {
-    await this.roomsRepository.delete(id)
+    await this.roomsRepository.delete(id);
   }
 }
-
-
-

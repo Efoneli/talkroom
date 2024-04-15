@@ -87,7 +87,6 @@
 // }
 
 "use client";
-// MessagesPage.jsx
 import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import axios, { AxiosError } from "axios";
 import { useParams, useRouter } from "next/navigation";
@@ -97,7 +96,7 @@ export interface Message {
   body: string;
 }
 
-const MessagesPage: React.FC = () => {
+const Messages: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState<string>("");
   const [ownerId, setOwnerId] = useState<number | undefined>(1); // Set ownerId based on your application logic
@@ -168,8 +167,7 @@ const MessagesPage: React.FC = () => {
           <div className="flex">
             <div className="w-1/2 px-4">
               <div className="text-gray-200 p-4 rounded-lg">
-                <h1 className="text-lg font-bold">Other user:</h1>
-                <p className="py-1 bg-blue-600">My name is Azul, lets chat buddy</p>
+                <p className="p-3 rounded-r-lg bg-blue-300 text-gray-600 ">My name is Azul, lets chat buddy</p>
               </div>
             </div>
             <div className="w-1/2 px-4">
@@ -177,9 +175,9 @@ const MessagesPage: React.FC = () => {
                 {messages.map((message: Message) => (
                   <div
                     key={message.id}
-                    className="flex justify-end mb-2" // Assuming all messages are from the user
+                    className="flex justify-end mb-2"
                   >
-                    <div className="p-3 rounded-lg bg-pink-900 text-white break-words">
+                    <div className="p-3 rounded-l-lg bg-blue-400 text-gray-700 break-words">
                       {message.body}
                     </div>
                   </div>
@@ -209,4 +207,4 @@ const MessagesPage: React.FC = () => {
   );
 };
 
-export default MessagesPage;
+export default Messages;

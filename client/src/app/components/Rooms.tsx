@@ -1,7 +1,6 @@
 // Rooms.jsx
 "use client";
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
 import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 

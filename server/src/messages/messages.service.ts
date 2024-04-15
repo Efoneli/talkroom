@@ -11,35 +11,36 @@ export class MessagesService {
     @InjectRepository(Message)
     private readonly messagesRepository: Repository<Message>,
     private readonly entityManager: EntityManager,
+  ) {}
 
-  ){}
   async create(createMessageDto: CreateMessageDto) {
-    const user = new Message(createMessageDto)
-    await this.entityManager.save(user)
+    const user = new Message(createMessageDto);
+    await this.entityManager.save(user);
   }
 
-  async findMessagesByRoomId(roomId: number): Promise<Message[]> {
-    return await this.messagesRepository.find({ where: { roomId } });
+  async findMessagesByownerId(ownerId: number): Promise<Message[]> {
+    return await this.messagesRepository.find({ where: { ownerId: ownerId } });
+    // Ensure that 'roomId' is a valid property for filtering messages
   }
 
   findAll() {
-    return this.messagesRepository.find()
+    return this.messagesRepository.find();
   }
 
   findOne(id: number) {
-    return this.messagesRepository.findOneBy({id})
+    return this.messagesRepository.findOneBy({ id });
   }
 
   async update(id: number, updateMessageDto: UpdateMessageDto) {
-    const message = await this.messagesRepository.findOneBy({id})
+    const message = await this.messagesRepository.findOneBy({ id });
     message.body = updateMessageDto.body ?? message.body;
-    
-    this.entityManager.save(message)
 
-    return message
+    this.entityManager.save(message);
+
+    return message;
   }
 
   async remove(id: number) {
-    await this.messagesRepository.delete(id)
+    await this.messagesRepository.delete(id);
   }
 }

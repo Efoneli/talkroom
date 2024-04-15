@@ -1,22 +1,29 @@
-import { Chat } from "src/chats/entities/chat.entity";
-import { AbstractEntity } from "src/database/abstract.module";
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne } from "typeorm";
+import { Chat } from 'src/chats/entities/chat.entity';
+import { AbstractEntity } from 'src/database/abstract.module';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+} from 'typeorm';
 
 @Entity()
 export class Message extends AbstractEntity<Message> {
+  @CreateDateColumn({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+  })
+  @Column()
+  ownerId: number;
 
-    @CreateDateColumn({
-        type: 'timestamp',
-        default: () => 'CURRENT_TIMESTAMP(6)',
-    })
+  @Column()
+  body: string;
 
-    @Column()
-    ownerId: number;
+  @Column()
+  roomId: number;
 
-    @Column()
-    body: string;
-
-    @ManyToOne(() => Chat, chat => chat.messages)
+  @ManyToOne(() => Chat, (chat) => chat.messages)
   @JoinColumn()
   chat: Chat;
 }
