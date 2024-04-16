@@ -89,7 +89,7 @@
 "use client";
 import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import axios, { AxiosError } from "axios";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 
 export interface Message {
   id: number;
@@ -101,19 +101,17 @@ const Messages: React.FC = () => {
   const [newMessage, setNewMessage] = useState<string>("");
   const [ownerId, setOwnerId] = useState<number | undefined>(1); // Set ownerId based on your application logic
   const router = useRouter();
-  const roomId = useParams();
+  const { roomId } = useParams();
 
   useEffect(() => {
     if (roomId) {
-      fetchMessages(roomId);
+      fetchMessages(roomId.toString()); // Convert roomId to string
     }
   }, [roomId]);
 
-  const fetchMessages = async (roomId: string | string[]) => {
+  const fetchMessages = async (roomId: string) => {
     try {
-      const response = await axios.get(
-        `http://localhost:3000/messages?roomId=${roomId}`
-      );
+      const response = await axios.get(`http://localhost:3000/messages?roomId=${roomId}`);
       const data = response.data;
       console.log(data);
       setMessages(data);
@@ -141,66 +139,56 @@ const Messages: React.FC = () => {
       await axios.post("http://localhost:3000/messages", {
         ownerId,
         body: newMessage,
+        roomId: roomId, // Include roomId in the request body
       });
     } catch (error) {
       const axiosError = error as AxiosError;
-      console.error("Error fetching messages:", axiosError.message);
+      console.error("Error adding message:", axiosError.message);
     }
   };
 
   return (
     <div>
-      <main className="flex  flex-col items-center justify-between p-24">
+      <main className="flex flex-col items-center justify-between p-24">
         <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-          <p className="font-mono font-bold fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-            Talkrooms&nbsp;
+          <p className="font-mono font-bold fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
+            Talkroom&nbsp;
           </p>
-         </div>
+        </div>
         <h1 className="my-4 text-pink-50 border border-gray-300 rounded p-2 hover:bg-pink-50 hover:text-gray-800">
-          Current Room: room here
+          Current Room: {roomId}
         </h1>
 
-        <div
-          style={{ height: "45vh", width: "100%" }}
-          className="bg-black lg:max-w-5xl lg:w-full relative"
-        >
-          <div className="flex">
-            <div className="w-1/2 px-4">
-              <div className="text-gray-200 p-4 rounded-lg">
-                <p className="p-3 rounded-r-lg bg-blue-300 text-gray-600 ">My name is Azul, lets chat buddy</p>
-              </div>
-            </div>
-            <div className="w-1/2 px-4">
-              <div className="overflow-y-auto h-[200px]">
+        <div style={{ height: "45vh", width: "100%" }} className="bg-black lg:max-w-5xl lg:w-full relative">
+          <div className="flex h-screen flex-col bg-gray-100">
+            <div className="flex-grow overflow-y-auto">
+              <div className="flex flex-col space-y-2 p-4">
+                {/* Individual chat message */}
+                <div className="flex items-center self-end rounded-xl rounded-tr bg-blue-500 py-2 px-3 text-white">
+                  <p>This is a sender message</p>
+                </div>
                 {messages.map((message: Message) => (
-                  <div
-                    key={message.id}
-                    className="flex justify-end mb-2"
-                  >
-                    <div className="p-3 rounded-l-lg bg-blue-400 text-gray-700 break-words">
-                      {message.body}
-                    </div>
+                  <div key={message.id} className="flex items-center self-start rounded-xl rounded-tl bg-gray-300 text-black py-2 px-3">
+                    <p>{message.body}</p>
                   </div>
                 ))}
               </div>
             </div>
+            <form onSubmit={handleSubmit}>
+              <div className="flex mt-4 w-full">
+                <input
+                  type="text"
+                  value={newMessage}
+                  onChange={handleMessageChange}
+                  placeholder="Press enter to send..."
+                  className="w-full p-3 outline-none text-gray-900"
+                />
+                <button type="submit" className="bg-pink-900 px-3 hover:bg-pink-500">
+                  Send
+                </button>
+              </div>
+            </form>
           </div>
-
-          <form onSubmit={handleSubmit}>
-            <div className="flex  mt-4 w-full">
-              <input
-                type="text"
-                value={newMessage}
-                onChange={handleMessageChange}
-                placeholder="Press enter to send..."
-                className="w-full p-3 outline-none text-gray-900"
-              />
-
-              <button type="submit" className="bg-pink-900 px-3 hover:bg-pink-500">
-                Send
-              </button>
-            </div>
-          </form>
         </div>
       </main>
     </div>

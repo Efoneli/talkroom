@@ -1,6 +1,6 @@
 import { Chat } from "src/chats/entities/chat.entity";
 import { AbstractEntity } from "src/database/abstract.module";
-import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class User extends AbstractEntity<User> {
