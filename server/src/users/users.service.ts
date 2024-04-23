@@ -23,6 +23,10 @@ export class UsersService {
     return this.usersRepository.find()
   }
 
+  findByName(name: string) {
+    return this.usersRepository.findByName(name)
+  }
+
   findOne(id: number) {
     return this.usersRepository.findOneBy({id})
   }

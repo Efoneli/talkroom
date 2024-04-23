@@ -1,16 +1,34 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto';
+import { CreateUserDto } from './dto/create-user.dto';\
+import { LoginDto } from './dto/login-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  // @Post()
+  // async create(@Body() createUserDto: CreateUserDto) {
+  //   return this.usersService.create(createUserDto);
+  // }
+
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+    try {
+      const user = await this.usersService.create(createUserDto);
+      
+      return { message: 'User created successfully', user };
+    } catch (error) {
+      return { error: 'Failed to create user: ' + error.message, statusCode: 500 };
+    }
   }
+}
+
+//   @Post('login') // Add a new route for handling login requests
+//   async login(@Body() loginData: LoginDto) {
+//     return this.usersService.findByName(loginData.name);
+// }
 
   @Get()
   findAll() {

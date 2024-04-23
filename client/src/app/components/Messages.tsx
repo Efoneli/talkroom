@@ -159,12 +159,11 @@ const Messages: React.FC = () => {
           Current Room: {roomId}
         </h1>
 
-        <div style={{ height: "45vh", width: "100%" }} className="bg-black lg:max-w-5xl lg:w-full relative">
-          <div className="flex h-screen flex-col bg-gray-100">
+        <div  className="bg-black lg:max-w-5xl lg:w-full relative">
+          <div className="flex h-[400px] flex-col bg-gray-900">
             <div className="flex-grow overflow-y-auto">
               <div className="flex flex-col space-y-2 p-4">
-                {/* Individual chat message */}
-                <div className="flex items-center self-end rounded-xl rounded-tr bg-blue-500 py-2 px-3 text-white">
+              <div className="flex items-center self-end rounded-xl rounded-tr bg-blue-500 py-2 px-3 text-white">
                   <p>This is a sender message</p>
                 </div>
                 {messages.map((message: Message) => (
@@ -174,6 +173,7 @@ const Messages: React.FC = () => {
                 ))}
               </div>
             </div>
+
             <form onSubmit={handleSubmit}>
               <div className="flex mt-4 w-full">
                 <input
