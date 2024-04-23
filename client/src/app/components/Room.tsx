@@ -7,7 +7,7 @@ interface Message {
   body: string;
 }
 
-const Room: React.FC<{ roomId: number }> = ({ roomId }) => {
+const Room: React.FC<{ roomId: number }> = ({ room, roomId }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState<string>("");
 
@@ -54,7 +54,7 @@ const Room: React.FC<{ roomId: number }> = ({ roomId }) => {
 
   return (
     <div>
-      <h1>Room: {roomId}</h1>
+      <h1>Room: {room}</h1>
       <ul>
         {messages.map((message: Message) => (
           <li key={message.id}>{message.body}</li>
