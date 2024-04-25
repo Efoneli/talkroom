@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import Rooms from "../components/Rooms";
+import Rooms from "../components/RoomsHomepage";
 
 const page: React.FC = () => {
   return (

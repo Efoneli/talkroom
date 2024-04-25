@@ -13,7 +13,9 @@ const RoomPage: React.FC = () => {
     const fetchMessages = async () => {
       try {
         const response = await axios.get(`http://localhost:3000/rooms/${roomId}/messages`);
+        
         const data = response.data;
+        console.log(response.data)
         setMessages(data);
       } catch (error) {
         const axiosError = error as AxiosError;

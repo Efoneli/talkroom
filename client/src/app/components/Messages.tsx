@@ -86,6 +86,8 @@
 //   );
 // }
 
+
+
 "use client";
 import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import axios, { AxiosError } from "axios";
@@ -96,22 +98,18 @@ export interface Message {
   body: string;
 }
 
-const Messages: React.FC = () => {
+const Messages: React.FC = ({ room }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState<string>("");
-  const [ownerId, setOwnerId] = useState<number | undefined>(1); // Set ownerId based on your application logic
+  const [ownerId, setOwnerId] = useState<number | undefined>(1);
   const router = useRouter();
-  const { roomId } = useParams();
+  const { id } = useParams();
 
-  useEffect(() => {
-    if (roomId) {
-      fetchMessages(roomId.toString()); // Convert roomId to string
-    }
-  }, [roomId]);
 
-  const fetchMessages = async (roomId: string) => {
+
+  const fetchMessages = async (id: number, room: string) => {
     try {
-      const response = await axios.get(`http://localhost:3000/messages?roomId=${roomId}`);
+      const response = await axios.get(`http://localhost:3000/messages/${id}`);
       const data = response.data;
       console.log(data);
       setMessages(data);
@@ -139,7 +137,7 @@ const Messages: React.FC = () => {
       await axios.post("http://localhost:3000/messages", {
         ownerId,
         body: newMessage,
-        roomId: roomId, // Include roomId in the request body
+        id, // Include roomId in the request body
       });
     } catch (error) {
       const axiosError = error as AxiosError;
@@ -151,13 +149,13 @@ const Messages: React.FC = () => {
     <div>
       <main className="flex flex-col items-center justify-between p-24">
         <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-          <p className="font-mono font-bold fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
+          <p className="font-mono mb-8 font-bold fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
             Talkroom&nbsp;
           </p>
         </div>
-        <h1 className="my-4 text-pink-50 border border-gray-300 rounded p-2 hover:bg-pink-50 hover:text-gray-800">
-          Current Room: {roomId}
-        </h1>
+        {/* <h1 className="my-4 text-pink-50 border border-gray-300 rounded p-2 hover:bg-pink-50 hover:text-gray-800">
+          Current Room: {'room.name'}
+        </h1> */}
 
         <div  className="bg-black lg:max-w-5xl lg:w-full relative">
           <div className="flex h-[400px] flex-col bg-gray-900">
@@ -181,9 +179,10 @@ const Messages: React.FC = () => {
                   value={newMessage}
                   onChange={handleMessageChange}
                   placeholder="Press enter to send..."
-                  className="w-full p-3 outline-none text-gray-900"
+                  className="w-full p-3 rounded-l-md outline-none text-gray-900"
                 />
-                <button type="submit" className="bg-pink-900 px-3 hover:bg-pink-500">
+                <button type="submit" className="bg-[#6cafee] px-3 rounded-r-md text-sm hover:bg-[#90bde7]">
+
                   Send
                 </button>
               </div>

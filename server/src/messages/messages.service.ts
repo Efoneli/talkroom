@@ -14,8 +14,8 @@ export class MessagesService {
   ) {}
 
   async create(createMessageDto: CreateMessageDto) {
-    const user = new Message(createMessageDto);
-    await this.entityManager.save(user);
+    const message = new Message(createMessageDto);
+    await this.entityManager.save(message);
   }
 
   async findMessagesByownerId(ownerId: number): Promise<Message[]> {

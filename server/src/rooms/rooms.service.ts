@@ -21,8 +21,12 @@ export class RoomsService {
     return this.roomsRepository.find();
   }
 
-  findOne(id: number) {
-    return this.roomsRepository.findOneBy({ id });
+  async findOne(id: number) {
+    const room = await this.roomsRepository.findOne({
+      where: { id },
+      relations: { messages: true },
+    });
+    return room;
   }
 
   async update(id: number, updateRoomDto: UpdateRoomDto) {

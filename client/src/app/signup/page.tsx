@@ -83,34 +83,30 @@
 
 // export default SignUp;
 
-
-
-
-'use client'
-import React, { useState } from 'react';
+"use client";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { createUser } from '../api/signup/route';
-import toast, { Toaster } from 'react-hot-toast';
+import { createUser } from "../api/signup/route";
+import toast, { Toaster } from "react-hot-toast";
 
 const Signup = () => {
-
   const router = useRouter();
 
-  const [name, setName] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [name, setName] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await createUser(name);
-      setName('');
-      setErrorMessage('');
+      setName("");
+      setErrorMessage("");
 
-      router.push('/dashboard')
+      router.push("/dashboard");
       if (statusCode === 201) {
-        toast.message('User successfully created')
+        toast.message("User successfully created");
       }
-      
+
       // Optionally, redirect the user to another page after successful signup
       // history.push('/dashboard'); // Requires React Router's useHistory hook
     } catch (error) {
@@ -121,12 +117,22 @@ const Signup = () => {
 
   return (
     <div className="form__container">
-      <h2>Sign Up</h2>
+      <p className="text-center">Welcome to Talkroom, please </p>
+      <span>
+        <h2>Sign Up</h2>
+      </span>
+
       {errorMessage && <p>{errorMessage}</p>}
       <form className="form" onSubmit={handleSubmit}>
         <div>
-          <label>Input Name:</label>
-          <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+          {/* <label>Input Name:</label> */}
+          <input
+            type="text"
+            placeholder="name here"
+            className="rounded-md"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
         </div>
         <button type="submit">Sign Up</button>
       </form>
@@ -135,4 +141,3 @@ const Signup = () => {
 };
 
 export default Signup;
-

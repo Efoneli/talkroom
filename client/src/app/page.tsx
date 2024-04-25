@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="main__container">
+    <main className="main__container bg-image ">
       <h1>Welcome</h1>
       <div>
         <Link href="/login">Login</Link>

@@ -21,6 +21,5 @@ export class Chat extends AbstractEntity<Chat>{
   @ManyToMany(() => User, user => user.chats)
     users: User[];
 
-    @OneToMany(() => Message, (message) => message.chat)
-  messages: Message[];
+  
 }

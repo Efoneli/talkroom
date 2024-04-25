@@ -34,7 +34,7 @@ body {
 
 
 html {
-  font-size: 62.5%;
+  font-size: 72.5%;
   box-sizing: border-box;
 }
 
@@ -172,3 +172,10 @@ html {
   font-weight: 400;
   border-radius: 1rem;
 }
+
+.bg-image {
+  background: url('./assets/bg-image.jpg');
+  background-size: cover; /* Ensures the image covers the entire container */
+  background-repeat: no-repeat;
+}
+

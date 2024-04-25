@@ -1,5 +1,5 @@
-import { Chat } from 'src/chats/entities/chat.entity';
 import { AbstractEntity } from 'src/database/abstract.module';
+import { Room } from 'src/rooms/entities/room.entity';
 import {
   Column,
   CreateDateColumn,
@@ -23,7 +23,7 @@ export class Message extends AbstractEntity<Message> {
   @Column()
   roomId: number;
 
-  @ManyToOne(() => Chat, (chat) => chat.messages)
+  @ManyToOne(() => Room, room => room.messages)
   @JoinColumn()
-  chat: Chat;
+  room: Room;
 }
